@@ -27,7 +27,7 @@ app.use(bodyParser.json());           //application would parse request body in 
 
 
 app.get('/login/:email',function(req,res){
-  var emailid = req.params.id;
+  var emailid = req.params.email;
 db.users.findOne({email:mongojs.email(emailid)},function(err,doc){
   res.json(doc);
 })
