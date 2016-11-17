@@ -1,3 +1,31 @@
+var app = angular.module('app', ['ngRoute']);
+
+
+app.config(function ($routeProvider) {
+  $routeProvider
+
+    .when('/dashboard', {
+    templateUrl: 'pages/dashboard.html',
+    controller: 'controller'
+  })
+
+  .when('/tables', {
+    templateUrl: 'pages/tables.html',
+    controller: 'controller'
+  })
+
+  .when('/forms', {
+    templateUrl: 'pages/forms.html',
+    controller: 'controller'
+  })
+
+  .otherwise({
+    redirectTo: '/dashboard'
+  });
+});
+
+
+
 var myApp = angular.module('myApp', []);
 myApp.controller('AppCtrl', ['$scope', '$http', function($scope, $http) {
     console.log("Hello World from gotya's angular controller");
@@ -18,7 +46,13 @@ refresh();
 $scope.auth = function(email,pass){
 	$http.get('/login'+ email).success(function(response){
 		console.log("i have got the user details");
-		console.log(response);
+
+		if(response.password === pass){
+			location.href ="index.html";
+			$scope.user=response;
+		}else{
+			location.href ="login.html";
+		}
 	})
 };
 	
