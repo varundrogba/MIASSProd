@@ -81,7 +81,7 @@ res.json(doc);
 });
 }); 
   
-app.listen(process.env.PORT || 8080); 
+app.listen(8080); 
 
   //app.listen(3000);
-    //console.log("Server running at 3000 using express");
+    console.log("Server running at port 8080 using express");

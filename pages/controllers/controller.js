@@ -26,7 +26,6 @@ app.config(function ($routeProvider) {
 
 
 
-var myApp = angular.module('myApp', []);
 myApp.controller('AppCtrl', ['$scope', '$http', function($scope, $http) {
     console.log("Hello World from gotya's angular controller");
 	
@@ -55,6 +54,8 @@ $scope.auth = function(email,pass){
 		}
 	})
 };
+
+
 	
 	$scope.addContact = function(){
 		console.log($scope.contact);
