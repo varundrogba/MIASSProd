@@ -1,7 +1,23 @@
 var express = require('express'); //importing express module
 var app = express(); //creating an express application
-
+var router = express.Router();
 const http = require('http');
+var bodyParser = require('body-parser');  //body-parser module required to parse body of request that server would recive.
+var path = require("path");
+
+ 	logger = require('morgan'),
+	bodyParser = require('body-parser'),
+	cookieParser = require('cookie-parser'),
+	expressSession = require('express-session');
+
+app.use(logger("tiny"));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(cookieParser('$2202$'));
+app.use(expressSession({secret: '$2202$', saveUninitialized: true, resave: true}));
+app.use(express.static(__dirname + "/pages")); //configuring express application, setting the path for static files
+
+
 
 var mongojs = require('mongojs'); //importing mongo js module
 var db = mongojs('devclient:NoobDuck8080@ds149207.mlab.com:49207/cloudiaas', ['users']); 
@@ -18,11 +34,17 @@ db.on('connect', function () {    //successful database connection will invoke t
     console.log('database connected');
 });
 
-var bodyParser = require('body-parser');  //body-parser module required to parse body of request that server would recive.
 
-app.use(express.static(__dirname + "/public")); //configuring express application, setting the path for static files
-app.use(bodyParser.json());           //application would parse request body in json format
 
+
+app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname + '/index.html'));
+});
+
+router.get('/session/set/:value', function(req, res) {
+	req.session.mySession = req.params.value;
+	res.send('session write success');
+});
 
 
 
@@ -34,9 +56,22 @@ db.users.findOne({email:mongojs.email(emailid)},function(err,doc){
 });
 
 
+app.get('/Bill/:email',function(req,res){
+	var emailid = req.params.email;
+	db.users.findOne({email:mongojs.email(emailid)},function(err,doc){
+  var a = doc.fitbit.start_date
+})
+});
+
+app.get('/session/get/', function(req, res) {
+	if(req.session.mySession)
+		res.send('the session value is: ' + req.session.mySession);
+	else
+		res.send("no session value");
+});
 
 
-
+/*
 app.get('/contactlist', function (req, res) { //function to execute when GET request is received on /contactlist route.
 console.log("I recieved a get request")     
 db.users.find(function (err, docs) {    //query for retrieving the response body.
@@ -80,8 +115,13 @@ new: true}, function (err, doc) {
 res.json(doc);
 });
 }); 
+*/
   
-app.listen(8080); 
+  app.use('/',router);
 
-  //app.listen(3000);
-    console.log("Server running at port 8080 using express");
+
+
+var server = app.listen(8080, function() {
+	console.log(' server is listening on port %d', server.address().port);
+});
+    
