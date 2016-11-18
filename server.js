@@ -38,7 +38,7 @@ db.on('connect', function () {    //successful database connection will invoke t
 
 
 app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname + '/index.html'));
+    res.sendFile(path.join(__dirname + 'pages/login.html'));
 });
 
 router.get('/session/set/:value', function(req, res) {
