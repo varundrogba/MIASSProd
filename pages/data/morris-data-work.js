@@ -3,52 +3,52 @@ $(function() {
     Morris.Area({
         element: 'morris-area-chart',
         data: [{
-            period: '2013',
+            period: '2016 Jan',
             direction: 1,
             ppm: 45,
             bodytemp: 78
         }, {
-            period: '2013',
+            period: '2016 Feb',
             direction: 2,
             ppm: 53,
             bodytemp: 80
         }, {
-            period: '2014',
+            period: '2016 Mar',
             direction: 14,
             ppm: 69,
             bodytemp: 91
         }, {
-            period: '2014',
+            period: '2016 Apr',
             direction: 1,
             ppm: 97,
             bodytemp: 89
         }, {
-            period: '2015',
+            period: '2016 May',
             direction: 23,
             ppm: 19,
             bodytemp: 93
         }, {
-            period: '2015',
+            period: '2016 Jun',
             direction: 3,
             ppm: 93,
             bodytemp: 81
         }, {
-            period: '2016',
+            period: '2016 Jul',
             direction: 1,
             ppm: 95,
             bodytemp: 88
         }, {
-            period: '2016',
+            period: '2016 Aug',
             direction: 4,
             ppm: 67,
             bodytemp: 75
         }, {
-            period: '2016',
+            period: '2016 Sep',
             direction: 14,
             ppm: 60,
             bodytemp: 28
         }, {
-            period: '2017',
+            period: '2016 Oct',
             direction: 2,
             ppm: 57,
             bodytemp: 91
