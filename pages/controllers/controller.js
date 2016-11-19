@@ -1,7 +1,7 @@
-var app = angular.module('app', ['ngRoute']);
+var myApp = angular.module('app', ['ngRoute']);
 
 
-app.config(function ($routeProvider) {
+myApp.config(function ($routeProvider) {
   $routeProvider
 
     .when('/dashboard', {
