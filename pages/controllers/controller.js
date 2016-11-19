@@ -1,11 +1,11 @@
-var myApp = angular.module('app', ['ngRoute']);
+var myApp = angular.module('myApp', ['ngRoute']);
 
 
 myApp.config(function ($routeProvider) {
   $routeProvider
 
     .when('/dashboard', {
-    templateUrl: 'pages/dashboard.html',
+    templateUrl: '/dashboard.html',
     controller: 'controller'
   })
 

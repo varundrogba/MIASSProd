@@ -3,7 +3,7 @@ var app = express(); //creating an express application
 var router = express.Router();
 const http = require('http');
 var bodyParser = require('body-parser');  //body-parser module required to parse body of request that server would recive.
-var path = require("path");
+var path = require('path');
 
  	logger = require('morgan'),
 	bodyParser = require('body-parser'),
@@ -41,6 +41,7 @@ app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + 'pages/login.html'));
 });
 
+
 router.get('/session/set/:value', function(req, res) {
 	req.session.mySession = req.params.value;
 	res.send('session write success');
@@ -71,7 +72,7 @@ app.get('/session/get/', function(req, res) {
 });
 
 
-/*
+
 app.get('/contactlist', function (req, res) { //function to execute when GET request is received on /contactlist route.
 console.log("I recieved a get request")     
 db.users.find(function (err, docs) {    //query for retrieving the response body.
@@ -115,9 +116,10 @@ new: true}, function (err, doc) {
 res.json(doc);
 });
 }); 
-*/
+
   
-  app.use('/',router);
+ 
+app.use('/',router);
 
 
 
