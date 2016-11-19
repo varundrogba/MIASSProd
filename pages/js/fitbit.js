@@ -11,6 +11,6 @@ $(function() {
     var TData = Math.floor(Math.random() * (100.8 - 91.8 + 1)) + 91.8;
 	
 	document.getElementById("Compass").innerHTML = CData + ' Direction';
-	document.getElementById("Pulse").innerHTML = PData + ' Pulse per minute';
-	document.getElementById("Temp").innerHTML = TData + ' Fahrenheit';
+	document.getElementById("Pulse").innerHTML = PData + ' pulses per minute';
+	document.getElementById("Temp").innerHTML = TData + ' fahrenheit';
 });
