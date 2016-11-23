@@ -1,21 +1,27 @@
 var express = require('express'); //importing express module
 var app = express(); //creating an express application
-var router = express.Router();
-const http = require('http');
+const http = require('http');	
 var bodyParser = require('body-parser');  //body-parser module required to parse body of request that server would recive.
 var path = require('path');
 
- 	logger = require('morgan'),
-	bodyParser = require('body-parser'),
-	cookieParser = require('cookie-parser'),
-	expressSession = require('express-session');
+ 	logger = require('morgan'),			//for printing request and response logs
+	bodyParser = require('body-parser'),	//parsing request body
+	cookieParser = require('cookie-parser'),	//parsing cookie
+	session = require('express-session');		//for maintaining sessions				
 
-app.use(logger("tiny"));
-app.use(bodyParser.urlencoded({ extended: false }));
+//var bcrypt =require('bcrypt');		//hashing passwords for auth
+//var salt = bcrypt.genSaltSync(9);
+//var hash = bcrypt.hashSync()
+ 
+ var passwordHash = require('password-hash');
+
+
+app.use(logger("dev"));
 app.use(bodyParser.json());
-app.use(cookieParser('$2202$'));
-app.use(expressSession({secret: '$2202$', saveUninitialized: true, resave: true}));
+app.use(cookieParser());
+app.use(session({secret: '$2202$', saveUninitialized: true, resave: true}));
 app.use(express.static(__dirname + "/pages")); //configuring express application, setting the path for static files
+app.set('port', 8080);
 
 
 
@@ -35,13 +41,70 @@ db.on('connect', function () {    //successful database connection will invoke t
 });
 
 
+app.get('/',function (req, res) {
 
 
-app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname + 'pages/login.html'));
+ //res.sendFile(__dirname + '/pages/login.html');
+res.redirect('/login.html');
+   
+  /*
+  console.log(req.session.doc);
+  console.log("==============");
+	console.log(req.cookies);
+	console.log("==============");
+	console.log(req.session.user.network[0]);
+console.log("==============");
+	console.log(req.session.user.network[1]);
+*/
+	
+
+
+
+
+});
+
+app.post('/login',function(req,res){
+	var email = req.body.email;
+	var password = req.body.pass;
+
+	console.log(req.body);
+
+	 db.users.findOne({email:req.body.email},function(err,doc){
+  		req.session.user = doc;
+
+  		if(passwordHash.verify(password,req.session.user.password)===true){
+  				req.redirect('/dashboard');
+  		}
+})
+	});
+
+
+app.post('/register',function(req,res){
+	var email = req.body.email;
+	req.body.pass = passwordHash.generate(req.body.pass);
+
+	db.users.insert(req.body, function(err, doc){ //query for inserting the response body.
+	console.log("inserted : ");
+	req.session.user = doc;
+	console.log(doc);
+	res.json(doc);
+	console.log('=====')
+	console.log(res);
+	req.redirect('/dashboard');
+
+	})
+
 });
 
 
+
+		//res.json(doc)
+	//res.cookie('user',result);
+
+ 
+
+
+/*
 router.get('/session/set/:value', function(req, res) {
 	req.session.mySession = req.params.value;
 	res.send('session write success');
@@ -119,11 +182,14 @@ res.json(doc);
 
   
  
-app.use('/',router);
+*/
 
 
+/*app.use('/',router);
 
-var server = app.listen(8080, function() {
-	console.log(' server is listening on port %d', server.address().port);
+
+    */
+
+http.createServer(app).listen(app.get('port'), function(){
+  console.log('Express server listening on port ' + app.get('port'));
 });
-    

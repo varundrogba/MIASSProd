@@ -4,7 +4,9 @@ var router = express.Router();
 
 
 router.get('/', checkifAuth, function(req,res){
-	res.render('index');
+	//res.redirect('/users/login');
+	//res.render('index');
+	res.render('login');
 });
 
 
