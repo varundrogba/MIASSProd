@@ -1,5 +1,5 @@
 var myApp = angular.module('myApp', ['ngRoute']);
-
+angular.module('myApp', ['ngPassword']);
 
 myApp.config(function ($routeProvider) {
   $routeProvider
