@@ -1,20 +1,21 @@
-var register = angular.module('myApp-register');
 
-myApp-register.controller('AppCtrl-register', ['$scope', '$http', function($scope, $http) { 
+var registerapp=angular.module('registerapp',[])
 
 
-$scope.register = function(email,pass){
-		
-		$scope.user.email=email;
-		$scope.user.pass=pass;
-	
-	$http.post('/register', $scope.user).success(function(response){
-		console.log("i have got the user details");
 
-		
-	})
+registerapp.controller('registercontroller',['$scope','$http',function($scope,$http){
+
+console.log("Hello from  register controller....");
+
+
+$scope.registeruser= function(){
+	console.log($scope.newuser);
+	$http.post('/registerNewUser',$scope.newuser);
+	window.location="/login.html";
+}
+
+$scope.checkPassword = function () {
+    $scope.registration_form.confirmpassword.$error.dontMatch = $scope.newuser.password !== $scope.newuser.confirmpassword;
 };
-
-
 
 }]);

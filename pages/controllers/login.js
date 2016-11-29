@@ -1,24 +1,39 @@
-var login = angular.module('myApp-login');
-
-myApp-login.controller('AppCtrl-login', ['$scope', '$http', function($scope, $http) { 
+var loginapp=angular.module('loginapp',[])
 
 
-$scope.auth = function(email,pass){
-		
-		$scope.user.email=email;
-		$scope.user.pass=pass;
-	
-	$http.post('/login', $scope.user).success(function(response){
-		console.log("i have got the user details");
+loginapp.controller('logincontroller',['$scope','$http',function($scope,$http){
 
-		if(response.isAuth === true){
-			location.href ="index.html";
-			$scope.user=response;
-		}else{
-			location.href ="login.html";
-		}
-	})
-};
+console.log("Hello from controller....");
+
+
+
+$scope.gotoRegister=function(){
+	window.location="/register.html";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
