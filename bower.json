@@ -40,7 +40,9 @@
     "bootstrap-social": "~4.8.0",
     "flot.tooltip": "~0.8.4",
     "angular": "1.5.8",
-    "angular-password": "^1.0.3"
+    "angular-password": "^1.0.3",
+    "angular-google-chart": "^0.1.0",
+    "zingchart": "^2.5.1"
   },
   "resolutions": {
     "font-awesome": "~4.6.3"

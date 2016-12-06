@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+   <script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+  <script src="//code.highcharts.com/highcharts.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/5.0.5/adapters/standalone-framework.js"></script>
+  <script src="http://code.highcharts.com/highcharts.src.js"></script>
+    <script src="aws-sdk.js"></script>
+    <script type="text/javascript">
+     // For testing you can put credentials here, but for production environments use a proper security model 
+     // http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/browser-configuring.html#Loading_Credentials_in_the_Client_s_Browser
+     AWS.config.credentials = {
+        accessKeyId: 'AKIAJGMTGQUJ2T26H6UA', 
+        secretAccessKey: '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'
+      };
+      
+      AWS.config.endpoint = 'http://monitoring.us-west-2.amazonaws.com';
+      AWS.config.region = 'us-west-2';
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <center><h3>Mobile Sensor Cloud IaaS - Administrator Interface</h3></center>
+      <script type="text/javascript">
+        var namespace = "AWS/EC2";
+        var metricName = "CPUUtilization";
+        var instanceId = "i-0fb5f8ff26ad08145";
+        var cloudwatch = new AWS.CloudWatch();
+        
+        var endDate = new Date();
+        var startDate = new Date(endDate);
+        var threeDays = 1000 * 60 * 60 * 24 * 3;
+        
+        startDate.setTime(startDate.getTime() - threeDays);
+        var stats = cloudwatch.getMetricStatistics(
+        {
+          Namespace: namespace, 
+          MetricName: metricName,
+          StartTime: startDate.toISOString(), 
+          EndTime: endDate.toISOString(), 
+          Period: 3600, 
+          Statistics: ['Maximum'],
+          Dimensions: [{Name: 'InstanceId', Value: instanceId}]
+        }, 
+        function(error, data) {
+          if(error) {
+            console.log(error);
+          } else {
+            var dataset = new Array();
+            for(var i=0; i < data.Datapoints.length; i++) {
+              var datum = new Array();
+              datum[0] = Date.parse(data.Datapoints[i].Timestamp);
+              datum[1] = data.Datapoints[i].Maximum;
+              dataset[i] = datum;
+            }
+        
+            var graphTitle = namespace + " " + metricName + " - " + instanceId;
+            var yAxisTitle = "% Utilization";
+            
+            $('#Graph').highcharts({
+              chart: {type: 'scatter'},
+              title: {text: graphTitle},
+              xAxis: {type: 'datetime', dateTimeLabelFormats: {month: '%e. %b',year: '%b'}},
+              yAxis: {title: {text: yAxisTitle}},
+              tooltip: {
+                formatter: function() {
+                  return Highcharts.dateFormat('%a %d %b %H:%M:%S', this.x) +': '+ this.y +'%';
+                }
+            },
+            series: [{name: data.Label,data: dataset}]
+            });
+          }
+        }
+      );
+      </script>
+      <h4>Statistics</h4>
+      <div id='Graph'>
+      </div>
+      <div id='Metrics'>
+        <h4>Metrics</h4>
+        <script type="text/javascript">
+          cloudwatch.listMetrics({Namespace: 'AWS/EC2', MetricName: 'CPUUtilization'}, function(error, data) {
+          if(error) {
+            console.log(error);
+          } else {
+            console.log(data);
+            console.log(data.Metrics.length);
+            for(var i=0; i < data.Metrics.length; i++) {          
+              var metric = data.Metrics[i];          
+              var newRowMarkup = "";
+              newRowMarkup += "<tr>";
+              newRowMarkup += "<td>" + metric.Namespace + "</td>";
+              newRowMarkup += "<td>" + metric.MetricName + "</td>";
+              newRowMarkup += "<td>";
+          
+              for(var y=0;y< metric.Dimensions.length;y++) {
+                var dimension = metric.Dimensions[y];
+                newRowMarkup += "<p>" + dimension.Name + " = " + dimension.Value + "</p>";
+              }
+              newRowMarkup += "</td>";
+              newRowMarkup += "</tr>";
+          
+              $('#MetricTable tr:last').after(newRowMarkup);
+           }
+         }
+       });
+        </script>
+        <table id='MetricTable' class='table'>
+          <thead>
+            <tr> 
+              <th>Namespace</th>
+              <th>Metric</th>
+              <th>Dimension</th>
+            </tr>
+          </thead>
+          <tr></tr>
+        </table>      
+      </div>
+      <!--div>
+        <h4>Links</h4>
+        <a href="http://aws.amazon.com/sdkforbrowser/">AWS SDK for JavaScript in the Browser</a>
+      </div-->
+    </div>
+  </body>
+</html>
