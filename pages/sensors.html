@@ -124,8 +124,8 @@
                         </div>
                         <a href="#">
                             <div class="panel-footer">
-                                <span class="pull-right"><button class="btn btn-success btn-circle btn-lg" id="button" type="button" ng-click="fitbit_start_date()" onclick = "sensorAdd()"><span class="pull-right"><i class="fa fa-plus"></i></span>
-                                <button class="btn btn-danger btn-circle btn-lg" id="button" ng-click="fitbit_end_date()" type="button"onclick = "sensorRemove()"><i class="fa fa-minus"></i>
+                                <span class="pull-right"><button class="btn btn-success btn-circle btn-lg" id="button" type="button" ng-click="fitbit_start_date()"><span class="pull-right"><i class="fa fa-plus"></i></span>
+                                <button class="btn btn-danger btn-circle btn-lg" id="button" ng-click="fitbit_end_date()" type="button" name="fitbit_stop_btn"><i class="fa fa-minus"></i>
                                 </button>
                                 </button>
                                 </span>
@@ -176,7 +176,7 @@
                         <a href="#">
                             <div class="panel-footer">
                                 <span class="pull-right"><button class="btn btn-success btn-circle btn-lg" id="pbutton" ng-click="plane_start_date()" type="button" onclick = "sensorAdd()"><span class="pull-right"><i class="fa fa-plus"></i></span>
-                                <button class="btn btn-danger btn-circle btn-lg" id="button" ng-click="plane_end_date()" type="button" onclick = "sensorRemove()"><i class="fa fa-minus"></i>
+                                <button class="btn btn-danger btn-circle btn-lg" id="button" ng-click="plane_end_date()" type="button"><i class="fa fa-minus"></i>
                                 </button>
                                 </button>
                                 </span>
@@ -227,7 +227,7 @@
                         <a href="#">
                             <div class="panel-footer">
                                 <span class="pull-right"><button class="btn btn-success btn-circle btn-lg" id="cbutton" ng-click="car_start_date()" type="button" onclick = "sensorAdd()"><span class="pull-right"><i class="fa fa-plus"></i></span>
-                                <button class="btn btn-danger btn-circle btn-lg" id="button" ng-click="car_end_date()" type="button" onclick = "sensorRemove()"><i class="fa fa-minus"></i>
+                                <button class="btn btn-danger btn-circle btn-lg" id="button" ng-click="car_end_date()" type="button"><i class="fa fa-minus"></i>
                                 </button>
                                 </button>
                                 </span>
@@ -274,9 +274,6 @@
 	function sensorAdd(){ alert("New Sensor Cluster Hired!");}
 	</script>
 	
-	<script>
-	function sensorRemove(){ alert("Sensor Cluster Deprovisioned!");}
-	</script>
 </body>
 
 </html>
