@@ -45,7 +45,7 @@ myApp.controller('AppCtrl',['$scope','$http',function($scope, $http) {
 
 
 
-
+			$scope.total=total_due.toFixed(2);
  			$scope.contactsarray=response;
  			$scope.bill_amount_array=bill_array;
  			// <td>{{contacts.amount}}</td>
