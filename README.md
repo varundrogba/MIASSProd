@@ -3,17 +3,11 @@
 
 Developing a Mobile Sensor Cloud Iaas Emulator with virtual sensors in the MEAN stack
 
+node installation instructions: https://nodejs.org/en/
+node dependencies can be found in package.json file
 
-Todo:
+Open command prompt in Windows or terminal in Linux
+run command node server
 
-1) Implement user sessions - rishi
+on browser type in URL localhost://8080
 
-2) Implement car and plane sensors - varun
-
-3) Server part of billing module - varun&mandar
-
-4) Login and registration errors - rishi&varun
-
-5) Load Balancer and AWS hosting
-
-6) Some way to display mongodb json data in graphical format on html page (similar to d3.js) - varun&mandar&rishi

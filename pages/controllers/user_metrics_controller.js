@@ -127,7 +127,7 @@ user_metrics.controller('user_metrics_controller',['$scope','$http',function($sc
  			        }
  			    },
  			    tooltip: {
- 			        valueSuffix: ' millions'
+ 			        valueSuffix: ''
  			    },
  			    plotOptions: {
  			        bar: {
